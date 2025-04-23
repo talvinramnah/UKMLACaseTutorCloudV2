@@ -1,0 +1,55 @@
+Acute asthma: management 
+The British Thoracic Society (BTS) classify patients with acute asthma into moderate, severe or life-threatening categories.
+
+Moderate	Severe	Life-threatening
+PEFR 50-75% best or predicted
+Speech normal
+RR < 25 / min
+Pulse < 110 bpm	PEFR 33 - 50% best or predicted
+Can't complete sentences
+RR > 25/min
+Pulse > 110 bpm	PEFR < 33% best or predicted
+Oxygen sats < 92%
+'Normal' pC02 (4.6-6.0 kPa)
+Silent chest, cyanosis or feeble respiratory effort
+Bradycardia, dysrhythmia or hypotension
+Exhaustion, confusion or coma
+
+Note that a patient having any one of the life-threatening features should be treated as having a life-threatening attack.
+
+A fourth category, 'Near-fatal asthma', is also recognised characterised by a raised pC02 and/or requiring mechanical ventilation with raised inflation pressures.
+
+Further assessment
+the BTS guidelines recommend arterial blood gases for patients with oxygen sats < 92%
+a chest x-ray is not routinely recommended, unless:
+life-threatening asthma
+suspected pneumothorax
+failure to respond to treatment
+
+Management
+admission
+all patients with life-threatening should be admitted in hospital
+patients with features of severe acute asthma should also be admitted if they fail to respond to initial treatment.
+other admission criteria include a previous near-fatal asthma attack, pregnancy, an attack occurring despite already using oral corticosteroid and presentation at night
+oxygen
+if patients are hypoxaemic, it is important to start them on supplemental oxygen therapy
+if patients are acutely unwell they should be started on 15L of supplemental via a non-rebreathe mask, which can then be titrated down to a flow rate where they are able to maintain a SpO‚‚ 94-98%.
+bronchodilation with short-acting beta‚‚-agonists (SABA)
+high-dose inhaled SABA e.g. salbutamol, terbutaline
+in patients without features of life-threatening or near-fatal asthma, this can be given by a standard pressurised metered-dose inhaler (pMDI) or by an oxygen-driven nebulizer
+in patients with features of a life-threatening exacerbation of asthma, nebulised SABA is recommended
+corticosteroid
+all patients should be given 40-50mg of prednisolone orally (PO) daily, which should be continued for at least five days or until the patient recovers from the attack
+during this time, patients should continue their normal medication routine including inhaled corticosteroids.
+ipratropium bromide: in patients with severe or life-threatening asthma, or in patients who have not responded to beta‚‚-agonist and corticosteroid treatment, nebulised ipratropium bromide, a short-acting muscarinic antagonist
+IV magnesium sulphate
+the BTS notes that the evidence base is mixed for this treatment that is now commonly given for severe/life-threatening asthma
+IV aminophylline may be considered following consultation with senior medical staff
+patients who fail to respond require senior critical care support and should be treated in an appropriate ITU/HDU setting. Treatment options include:
+intubation and ventilation
+extracorporeal membrane oxygenation (ECMO)
+
+Criteria for discharge
+been stable on their discharge medication (i.e. no nebulisers or oxygen) for 12-24 hours
+inhaler technique checked and recorded
+PEF >75% of best or predicted

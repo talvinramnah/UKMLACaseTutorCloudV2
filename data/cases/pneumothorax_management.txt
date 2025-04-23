@@ -1,0 +1,73 @@
+Pneumothorax: management 
+The British Thoracic Society (BTS) published updated guidelines for the management of spontaneous pneumothorax in 2023.
+
+The updated guidelines put less emphasis on the size of the pneumothorax and more emphasis on whether the patient is symptomatic and the presence of high-risk characteristics.
+
+Decision algorithm
+
+The first step is assessing whether the patient is symptomatic
+the BTS define minimal symptoms as 'no significant pain or breathlessness and no physiological compromise'
+no or minimal symptoms → conservative care, regardless of pneumothorax size
+symptomatic → assess for high-risk characteristics
+
+If a pneumothorax is symptomatic, the next step is assessment for high-risk characteristics
+high-risk characteristics are defined as follows:
+haemodynamic compromise (suggesting a tension pneumothorax)
+significant hypoxia
+bilateral pneumothorax
+underlying lung disease
+≥ 50 years of age with significant smoking history
+haemothorax
+if no high-risk characteristics are present, and it is safe to intervene, then there is a choice of intervention:
+conservative care
+ambulatory device
+needle aspiration
+if high-risk characteristics are present, and it is safe to intervene → chest drain
+
+How is safety or intervention determined?
+before a needle aspiration/chest drain insertion, the safety of intervention should be assessed
+this depends on the clinical context, but is usually:
+2cm laterally or apically on chest x-ray, or
+any size on CT scan which can be safely accessed with radiological support
+
+
+
+
+Management options
+
+Conservative care
+patients with a primary spontaneous pneumothorax that is managed conservatively should be reviewed every 2-4 days as an outpatient
+patients with a secondary spontaneous pneumothorax that is managed conservatively should be monitored as an inpatient
+if stable, follow-up in the outpatients department in 2-4 weeks
+
+Ambulatory care
+an example of an ambulatory device is the Rocketµ Pleural Vent„
+it includes an 8FG catheter mounted on an 18G needle and a pigtail catheter to minimize the risk of occlusion
+ambulatory devices typically have a one-way valve and vent to prevent air and fluid return to the pleural space while allowing for controlled escape of air and drainage of fluid
+many devices also have an indication diaphragm that signals when the catheter tip enters the pleural space and continues to fluctuate with respiration, aiding in the assessment of pneumothorax resolution
+
+
+
+Needle aspiration
+a chest drain should be inserted if needle aspiration of a pneumothorax is unsuccessful
+if resolved, discharge and follow-up in the outpatients department in 2-4 weeks
+
+Chest drain insertion
+daily review as an inpatient
+remove drain when resolved
+discharge and follow-up in the outpatients department in 2-4 weeks
+
+Persistentent / recurrent pneumothorax
+
+If a patient has a persistent air leak or insufficient lung reexpansion despite chest drain insertion, or the patient has recurrent pneumothoraces, then video-assisted thoracoscopic surgery (VATS) should be considered to allow for mechanical/chemical pleurodesis +/- bullectomy.
+
+Discharge advice
+
+Smoking
+patients should be advised to avoid smoking to reduce the risk of further episodes - the lifetime risk of developing a pneumothorax in healthy smoking men is around 10% compared with around 0.1% in non-smoking men
+
+Fitness to fly
+absolute contraindication, the CAA suggest patients may travel 2 weeks after successful drainage if there is no residual air. The British Thoracic Society used to recommend not travelling by air for a period of 6 weeks but this has now been changed to 1 week post check x-ray
+
+Scuba diving
+the BTS guidelines state: 'Diving should be permanently avoided unless the patient has undergone bilateral surgical pleurectomy and has normal lung function and chest CT scan postoperatively.'

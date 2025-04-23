@@ -1,0 +1,61 @@
+Acute otitis media 
+Acute otitis media is extremely common in young children, with around half of children having three or more episodes by the age of 3 years.
+
+Pathophysiology
+whilst viral upper respiratory tract infections (URTIs) typically precede otitis media, most infections are secondary to bacteria, particularly Streptococcus pneumonaie, Haemophilus influenzae and Moraxella catarrhalis
+viral URTIs are thought to disturb the normal nasopharyngeal microbiome, allowing bacteria to infect the middle ear via the Eustachian tube
+
+Clinical features and diagnosis
+
+Features
+otalgia
+some children may tug or rub their ear
+fever occurs in around 50% of cases
+hearing loss
+recent viral URTI symptoms are common (e.g. coryza)
+ear discharge may occur if the tympanic membrane perforates
+
+Possible otoscopy findings:
+bulging tympanic membrane → loss of light reflex
+opacification or erythema of the tympanic membrane
+perforation with purulent otorrhoea
+decreased mobility if using a pneumatic otoscope
+
+Whilst guidelines vary, the majority use the following criteria to diagnose otitis media:
+acute onset of symptoms
+otalgia or ear tugging
+presence of a middle ear effusion
+bulging of the tympanic membrane, or
+otorrhoea
+decreased mobility on pneumatic otoscopy
+inflammation of the tympanic membrane
+i.e. erythema
+
+Management
+
+Acute otitis media is generally a self-limiting condition that does not require an antibiotic prescription. There are however some exceptions listed below. Analgesia should be given to relieve otalgia. Parents should be advised to seek medical help if the symptoms worsen or do not improve after 3 days.
+
+Antibiotics should be prescribed immediately if:
+Symptoms lasting more than 4 days or not improving
+Systemically unwell but not requiring admission
+Immunocompromise or high risk of complications secondary to significant heart, lung, kidney, liver, or neuromuscular disease
+Younger than 2 years with bilateral otitis media
+Otitis media with perforation and/or discharge in the canal
+
+If an antibiotic is given, a 5-7 day course of amoxicillin is first-line. In patients with penicillin allergy, erythromycin or clarithromycin should be given.
+
+Sequelae and complications
+
+Common sequelae include:
+perforation of the tympanic membrane → otorrhoea
+unresolved with acute otitis media with perforation may develop into chronic suppurative otitis media (CSOM)
+CSOM is defined as perforation of the tympanic membrane with otorrhoea for > 6 weeks
+hearing loss
+labyrinthitis
+
+Complications:
+mastoiditis
+meningitis
+brain abscess
+facial nerve paralysis
+

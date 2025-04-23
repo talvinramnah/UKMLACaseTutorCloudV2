@@ -1,0 +1,139 @@
+Acute coronary syndrome: initial management 
+Acute coronary syndrome (ACS) is a very common and important presentation in medicine. The management of ACS has evolved over recent years, with the development of new drugs and procedures such as percutaneous coronary intervention (PCI).
+
+Emergency departments often have their own protocols based on local factors such as the availability of PCI and hospital drug formularies. The following is based on the 2020 update to the NICE ACS guidelines.
+
+Acute coronary syndrome can be classified as follows:
+ST-elevation myocardial infarction (STEMI): ST-segment elevation + elevated biomarkers of myocardial damage
+non ST-elevation myocardial infarction (NSTEMI): ECG changes but no ST-segment elevation + elevated biomarkers of myocardial damage
+unstable angina
+
+The management of ACS depends on the particular subtype. NICE management guidance groups the patients into two groups:
+1. STEMI
+2. NSTEM/unstable angina
+
+Common management of all patients with ACS
+
+Initial drug therapy
+aspirin 300mg
+oxygen should only be given if the patient has oxygen saturations < 94% in keeping with British Thoracic Society oxygen therapy guidelines
+morphine should only be given for patients with severe pain
+previously IV morphine was given routinely
+evidence, however, suggests that this may be associated with adverse outcomes
+nitrates
+can be given either sublingually or intravenously
+useful if the patient has ongoing chest pain or hypertension
+should be used in caution if patient hypotensive
+
+The next step in managing a patient with suspected ACS is to determine whether they meet the ECG criteria for STEMI. It is, of course, important to recognise that these criteria should be interpreted in the context of the clinical history.
+
+STEMI criteria
+clinical symptoms consistent with ACS (generally of ≥ 20 minutes duration) with persistent (> 20 minutes) ECG features in ≥ 2 contiguous leads of:
+2.5 mm (i.e ≥ 2.5 small squares) ST elevation in leads V2-3 in men under 40 years, or ≥ 2.0 mm (i.e ≥ 2 small squares) ST elevation in leads V2-3 in men over 40 years
+1.5 mm ST elevation in V2-3 in women
+1 mm ST elevation in other leads
+new LBBB (LBBB should be considered new unless there is evidence otherwise)
+
+
+
+
+Management of STEMI
+
+
+
+Diagram showing the simplified management of STEMI according to NICE guidelines. A number of assumptions (listed at the bottom) are made.
+
+Once a STEMI has been confirmed the first step is to immediately assess eligibility for coronary reperfusion therapy. There are two types of coronary reperfusion therapy:
+percutaneous coronary intervention
+should be offered if the presentation is within 12 hours of the onset of symptoms AND PCI can be delivered within 120 minutes of the time when fibrinolysis could have been given (i.e. consider fibrinolysis if there is a significant delay in being able to provide PCI)
+if patients present after 12 hours and still have evidence of ongoing ischaemia then PCI should still be considered
+drug-eluting stents are now used. Previously 'bare-metal' stents were sometimes used but have higher rates of restenosis
+radial access is preferred to femoral access
+fibrinolysis
+should be offered within 12 hours of the onset of symptoms if primary PCI cannot be delivered within 120 minutes of the time when fibrinolysis could have been given
+a practical example may be a patient who presents with a STEMI to a small district general hospital (DGH) that does not have facilities for PCI. If they cannot be transferred to a larger hospital for PCI within 120 minutes then fibrinolysis should be given. If the patient's ECG taken 90 minutes after fibrinolysis failed to show resolution of the ST elevation then they would then require transfer for PCI
+
+If patients are eligible this should be offered as soon as possible.
+
+Percutaneous coronary intervention for patients with STEMI
+
+Further antiplatelet prior to PCI
+this is termed 'dual antiplatelet therapy', i.e. aspirin + another drug
+if the patient is not taking an oral anticoagulant: prasugrel
+if taking an oral anticoagulant: clopidogrel
+
+Drug therapy during PCI
+patients undergoing PCI with radial access:
+unfractionated heparin with bailout glycoprotein IIb/IIIa inhibitor (GPI) - this is the action of using a GPI during the procedure when it was not intended from the outset, e.g. because of worsening or persistent thrombus
+patients undergoing PCI with femoral access:
+bivalirudin with bailout GPI
+
+Other procedures during PCI
+thrombus aspiration, but not mechanical thrombus extraction, should be considered
+complete revascularisation should be considered for patients with multivessel coronary artery disease without cardiogenic shock
+
+
+Fibrinolysis for patients with STEMI
+
+Fibrinolysis used to be the only form of coronary reperfusion therapy available. However, it is used much less commonly now given the widespread availability of PCI.
+
+The contraindications to fibrinolysis and other factors are described in other notes.
+
+Patients undergoing fibrinolysis should also be given an antithrombin drug.
+
+An ECG should be repeated after 60-90 minutes to see if the ECG changes have resolved. If patients have persistent myocardial ischaemia following fibrinolysis then PCI should be considered.
+
+
+Management of NSTEMI/unstable angina
+
+
+
+Diagram showing the simplified management of NSTEMI/unstable angina according to NICE guidelines. A number of assumptions (listed at the bottom) are made.
+
+The management of NSTEMI/unstable angina is complicated and depends on individual patient factors and a risk assessment. The summary below provides an overview but the full NICE guidelines should be reviewed for further details.
+
+Further drug therapy
+antithrombin treatment
+fondaparinux should be offered to patients who are not at a high risk of bleeding and who are not having angiography immediately
+if immediate angiography is planned or a patients creatinine is > 265 µmol/L then unfractionated heparin should be given
+
+Risk assessment
+
+The Global Registry of Acute Coronary Events (GRACE) is the most widely used tool for risk assessment. It can be calculated using online tools and takes into account the following factors:
+age
+heart rate, blood pressure
+cardiac (Killip class) and renal function (serum creatinine)
+cardiac arrest on presentation
+ECG findings
+troponin levels
+
+This results in the patient being risk stratified as follows:
+
+Predicted 6-month mortality	Risk of future adverse cardiovascular events
+1.5% or below	Lowest
+> 1.5% to 3.0%	Low
+> 3.0% to 6.0%	Intermediate
+> 6.0% to 9.0%	High
+over 9.0%	Highest
+
+Based on this risk assessment key decisions are made regarding whether a patient has coronary angiography (with follow-on PCI if necessary) or has conservative management. The detailed pros/cons of this decision are covered in other notes.
+
+Which patients with NSTEMI/unstable angina should have coronary angiography (with follow-on PCI if necessary)?
+immediate: patient who are clinically unstable (e.g. hypotensive)
+within 72 hours: patients with a GRACE score > 3% i.e. those at intermediate, high or highest risk
+coronary angiography should also be considered for patients if ischaemia is subsequently experienced after admission
+
+Percutaneous coronary intervention for patients with NSTEMI/unstable angina
+
+Further drug therapy
+unfractionated heparin should be given regardless of whether the patient has had fondaparinux or not
+further antiplatelet ('dual antiplatelet therapy', i.e. aspirin + another drug) prior to PCI
+if the patient is not taking an oral anticoagulant: prasugrel or ticagrelor
+if taking an oral anticoagulant: clopidogrel
+
+Conservative management for patients with NSTEMI/unstable angina
+
+Further drug therapy
+further antiplatelet ('dual antiplatelet therapy', i.e. aspirin + another drug)
+if the patient is not at a high risk of bleeding: ticagrelor
+if the patient is at a high risk of bleeding: clopidogrel

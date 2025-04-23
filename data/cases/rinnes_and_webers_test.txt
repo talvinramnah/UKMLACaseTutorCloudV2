@@ -1,0 +1,22 @@
+Rinne's and Weber's test 
+Performing both Rinne's and Weber's test allows differentiation of conductive and sensorineural deafness.
+
+Rinne's test
+tuning fork is placed over the mastoid process until the sound is no longer heard, followed by repositioning just over external acoustic meatus
+'positive test': air conduction (AC) is normally better than bone conduction (BC)
+'negative test': if BC > AC then conductive deafness
+
+Weber's test
+tuning fork is placed in the middle of the forehead equidistant from the patient's ears
+the patient is then asked which side is loudest
+in unilateral sensorineural deafness, sound is localised to the unaffected side
+in unilateral conductive deafness, sound is localised to the affected side
+
+Interpretation of Rinne and Weber tests
+
+Rinne result	Weber result
+Normal	Air conduction > bone conduction bilaterally	Midline
+Conductive hearing loss	Bone conduction > air conduction in affected ear
+Air conduction > bone conduction in unaffected ear	Lateralises to affected ear
+Sensorineural hearing loss	Air conduction > bone conduction bilaterally	Lateralises to unaffected ear
+

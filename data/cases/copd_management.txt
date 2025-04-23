@@ -1,0 +1,69 @@
+COPD: stable management 
+NICE updated its guidelines on the management of chronic obstructive pulmonary disease (COPD) in 2018.
+
+General management
+>smoking cessation advice: including offering nicotine replacement therapy, varenicline or bupropion
+annual influenza vaccination
+one-off pneumococcal vaccination
+pulmonary rehabilitation to all people who view themselves as functionally disabled by COPD (usually Medical Research Council [MRC] grade 3 and above)
+
+Bronchodilator therapy
+a short-acting beta2-agonist (SABA) or short-acting muscarinic antagonist (SAMA) is first-line treatment
+for patients who remain breathless or have exacerbations despite using short-acting bronchodilators the next step is determined by whether the patient has 'asthmatic features/features suggesting steroid responsiveness'
+
+There are a number of criteria NICE suggest to determine whether a patient has asthmatic/steroid responsive features:
+any previous, secure diagnosis of asthma or of atopy
+a higher blood eosinophil count - note that NICE recommend a full blood count for all patients as part of the work-up
+substantial variation in FEV1 over time (at least 400 ml)
+substantial diurnal variation in peak expiratory flow (at least 20%)
+
+Interestingly NICE do not recommend formal reversibility testing as one of the criteria. In the guidelines they state that 'routine spirometric reversibility testing is not necessary as part of the diagnostic process or to plan initial therapy with bronchodilators or corticosteroids. It may be unhelpful or misleading...'. They then go on to discuss why they have reached this conclusion. Please see the guidelines for more details.
+
+No asthmatic features/features suggesting steroid responsiveness
+add a long-acting beta2-agonist (LABA) + long-acting muscarinic antagonist (LAMA)
+if already taking a SAMA, discontinue and switch to a SABA
+
+Asthmatic features/features suggesting steroid responsiveness
+LABA + inhaled corticosteroid (ICS)
+if patients remain breathless or have exacerbations offer triple therapy i.e. LAMA + LABA + ICS
+if already taking a SAMA, discontinue and switch to a SABA
+NICE recommend the use of combined inhalers where possible
+
+
+
+
+Oral theophylline
+NICE only recommends theophylline after trials of short and long-acting bronchodilators or to people who cannot used inhaled therapy
+the dose should be reduced if macrolide or fluoroquinolone antibiotics are co-prescribed
+
+Oral prophylactic antibiotic therapy
+azithromycin prophylaxis is recommended in select patients
+patients should not smoke, have optimised standard treatments and continue to have exacerbations
+other prerequisites include a CT thorax (to exclude bronchiectasis) and sputum culture (to exclude atypical infections and tuberculosis)
+LFTs and an ECG to exclude QT prolongation should also be done as azithromycin can prolong the QT interval
+
+Standby medication: NICE recommend offering a short course of oral corticosteroids and oral antibiotics to keep at home if: NICE
+have had an exacerbation within the last year
+understand how to take the medication, and are aware of associated risks and benefits
+know to when to seek help and when to ask for replacements once medication has been used
+
+Mucolytics
+should be 'considered' in patients with a chronic productive cough and continued if symptoms improve
+
+Phosphodiesterase-4 (PDE-4) inhibitors NICE
+oral PDE-4 inhibitors such as roflumilast reduce the risk of COPD exacerbations in patients with severe COPD and a history of frequent COPD exacerbations
+NICE recommend if:
+the disease is severe, defined as a forced expiratory volume in 1 second (FEV1) after a bronchodilator of less than 50% of predicted normal, and
+the person has had 2 or more exacerbations in the previous 12 months despite triple inhaled therapy with a long-acting muscarinic antagonist, a long-acting beta-2 agonist and an inhaled corticosteroid
+
+Cor pulmonale
+features include peripheral oedema, raised jugular venous pressure, systolic parasternal heave, loud P2
+use a loop diuretic for oedema, consider long-term oxygen therapy
+ACE-inhibitors, calcium channel blockers and alpha blockers are not recommended by NICE
+
+Factors which may improve survival in patients with stable COPD
+smoking cessation - the single most important intervention in patients who are still smoking
+long term oxygen therapy in patients who fit criteria
+lung volume reduction surgery in selected patients
+
+
