@@ -112,7 +112,22 @@ except Exception as e:
 # --- AUTH HELPERS ---
 def signup_user(email, password):
     try:
-        return supabase.auth.sign_up({"email": email, "password": password})
+        # Get the site URL from Streamlit's environment
+        site_url = st.get_option("server.baseUrlPath") or "http://localhost:8501"
+        
+        # If we're on Streamlit Cloud, construct the full URL
+        if "STREAMLIT_SHARING_MODE" in os.environ:
+            site_url = f"https://{os.environ['STREAMLIT_APP_URL']}"
+        
+        auth_options = {
+            "email": email,
+            "password": password,
+            "options": {
+                "emailRedirectTo": f"{site_url}/_stcore/authenticate"
+            }
+        }
+        
+        return supabase.auth.sign_up(auth_options)
     except Exception as e:
         st.error(f"Signup failed: {str(e)}")
         return None
