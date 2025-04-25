@@ -29,6 +29,32 @@ SUPABASE_KEY = st.secrets["SUPABASE_KEY"]
 CASE_FILES_DIR = Path(__file__).parent / "data" / "cases"
 
 # --- HELPER FUNCTIONS ---
+def wait_for_run_completion(thread_id: str, run_id: str, timeout: int = 60):
+    """Wait for run completion with exponential backoff."""
+    start_time = time.time()
+    wait_time = 0.5
+    max_wait = 2.0  # Maximum wait between checks
+    
+    while True:
+        if time.time() - start_time > timeout:
+            raise TimeoutError("Response timed out")
+            
+        status = client.beta.threads.runs.retrieve(
+            thread_id=thread_id,
+            run_id=run_id
+        ).status
+
+        if status == "completed":
+            return True
+        if status == "failed":
+            raise Exception("Assistant run failed")
+        if status == "expired":
+            raise Exception("Assistant run expired")
+            
+        # Exponential backoff
+        time.sleep(min(wait_time, max_wait))
+        wait_time *= 1.5
+
 @rate_limit(1)
 def send_to_assistant(input_text, thread_id):
     client.beta.threads.messages.create(
@@ -43,6 +69,14 @@ def send_to_assistant(input_text, thread_id):
     )
     
     return run.id
+
+def log_performance_metric(operation: str, duration: float):
+    """Log performance metrics for monitoring."""
+    try:
+        # Implementation of log_performance_metric function
+        pass
+    except Exception as e:
+        st.error(f"Error logging performance metric: {str(e)}")
 
 def ensure_case_files_exist():
     """Verify that all case files exist and are readable."""
@@ -677,33 +711,3 @@ def handle_case_completion(condition: str, feedback: str, score: int):
         
     except Exception as e:
         st.error(f"Error storing performance data: {str(e)}")
-
-def wait_for_run_completion(thread_id: str, run_id: str, timeout: int = 60):
-    """Wait for run completion with exponential backoff."""
-    start_time = time.time()
-    wait_time = 0.5
-    max_wait = 2.0  # Maximum wait between checks
-    
-    while True:
-        if time.time() - start_time > timeout:
-            raise TimeoutError("Response timed out")
-            
-        status = client.beta.threads.runs.retrieve(
-            thread_id=thread_id,
-            run_id=run_id
-        ).status
-
-        if status == "completed":
-            return True
-        if status == "failed":
-            raise Exception("Assistant run failed")
-        if status == "expired":
-            raise Exception("Assistant run expired")
-            
-        # Exponential backoff
-        time.sleep(min(wait_time, max_wait))
-        wait_time *= 1.5
-
-def log_performance_metric(operation: str, duration: float):
-    # Implementation of log_performance_metric function
-    pass
