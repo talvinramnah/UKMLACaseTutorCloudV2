@@ -471,34 +471,22 @@ if get_user_state('case_started'):
             chat_history.append(("user", user_input))
             set_user_state('chat_history', chat_history)
 
-            # Rate limit OpenAI calls
-            @rate_limit(1)
-            def send_to_assistant(input_text):
-                client.beta.threads.messages.create(
-                    thread_id=get_user_state('thread_id'),
-                    role="user",
-                    content=input_text
-                )
-                
-                run = client.beta.threads.runs.create(
-                    thread_id=get_user_state('thread_id'),
-                    assistant_id=ASSISTANT_ID
-                )
-                
-                return run.id
+            # Get thread ID
+            thread_id = get_user_state('thread_id')
             
-            run_id = send_to_assistant(user_input)
+            # Send message to assistant
+            run_id = send_to_assistant(user_input, thread_id)
             if not run_id:  # Rate limit hit
                 set_user_state('is_loading', False)
                 return
                 
             # Wait for completion with timeout and exponential backoff
-            if not wait_for_run_completion(get_user_state('thread_id'), run_id):
+            if not wait_for_run_completion(thread_id, run_id):
                 st.error("Response timed out. Please try again.")
                 set_user_state('is_loading', False)
                 return
 
-            messages = client.beta.threads.messages.list(thread_id=get_user_state('thread_id'))
+            messages = client.beta.threads.messages.list(thread_id=thread_id)
             for msg in messages:
                 if msg.role == "assistant":
                     reply = msg.content[0].text.value
@@ -691,3 +679,19 @@ def wait_for_run_completion(thread_id: str, run_id: str, timeout: int = 60):
 def log_performance_metric(operation: str, duration: float):
     # Implementation of log_performance_metric function
     pass
+
+# Add this function definition at the top level
+@rate_limit(1)
+def send_to_assistant(input_text, thread_id):
+    client.beta.threads.messages.create(
+        thread_id=thread_id,
+        role="user",
+        content=input_text
+    )
+    
+    run = client.beta.threads.runs.create(
+        thread_id=thread_id,
+        assistant_id=ASSISTANT_ID
+    )
+    
+    return run.id
