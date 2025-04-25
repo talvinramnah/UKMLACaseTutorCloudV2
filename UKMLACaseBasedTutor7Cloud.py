@@ -28,6 +28,22 @@ SUPABASE_KEY = st.secrets["SUPABASE_KEY"]
 # Case file directory - using relative path for cloud deployment
 CASE_FILES_DIR = Path(__file__).parent / "data" / "cases"
 
+# --- HELPER FUNCTIONS ---
+@rate_limit(1)
+def send_to_assistant(input_text, thread_id):
+    client.beta.threads.messages.create(
+        thread_id=thread_id,
+        role="user",
+        content=input_text
+    )
+    
+    run = client.beta.threads.runs.create(
+        thread_id=thread_id,
+        assistant_id=ASSISTANT_ID
+    )
+    
+    return run.id
+
 def ensure_case_files_exist():
     """Verify that all case files exist and are readable."""
     missing_files = []
@@ -691,19 +707,3 @@ def wait_for_run_completion(thread_id: str, run_id: str, timeout: int = 60):
 def log_performance_metric(operation: str, duration: float):
     # Implementation of log_performance_metric function
     pass
-
-# Add this function definition at the top level
-@rate_limit(1)
-def send_to_assistant(input_text, thread_id):
-    client.beta.threads.messages.create(
-        thread_id=thread_id,
-        role="user",
-        content=input_text
-    )
-    
-    run = client.beta.threads.runs.create(
-        thread_id=thread_id,
-        assistant_id=ASSISTANT_ID
-    )
-    
-    return run.id
