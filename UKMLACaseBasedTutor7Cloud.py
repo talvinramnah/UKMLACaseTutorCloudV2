@@ -8,7 +8,15 @@ import traceback
 import os
 from pathlib import Path
 from functools import lru_cache
-from utils import rate_limit, check_session_expiry, is_chat_ready
+from utils import (
+    rate_limit, 
+    check_session_expiry, 
+    is_chat_ready,
+    init_user_session,
+    clear_user_session,
+    get_user_state,
+    set_user_state
+)
 
 # --- CONFIG ---
 openai.api_key = st.secrets["OPENAI_API_KEY"]
