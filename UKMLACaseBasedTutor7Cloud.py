@@ -458,7 +458,7 @@ if get_user_state('case_started'):
         st.chat_message(role).markdown(msg)
 
 # --- CHAT INPUT ---
-if get_user_state('case_started'):
+def handle_chat_input():
     if not is_chat_ready():
         st.stop()
     
@@ -573,6 +573,9 @@ if get_user_state('case_started'):
             st.error(f"An error occurred: {str(e)}")
         finally:
             set_user_state('is_loading', False)
+
+if get_user_state('case_started'):
+    handle_chat_input()
 
 # Show loading indicator
 if get_user_state('is_loading'):
