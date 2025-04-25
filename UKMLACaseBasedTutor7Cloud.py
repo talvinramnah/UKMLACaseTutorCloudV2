@@ -586,7 +586,7 @@ def handle_chat_input():
                                     
                                     # Store performance data
                                     performance_data = {
-                                        "user_id": get_user_state('current_user_id'),
+                                        "user_id": st.session_state.current_user_id,
                                         "condition": get_user_state('condition'),
                                         "case_variation": get_user_state('case_variation'),
                                         "score": score,
