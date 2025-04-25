@@ -7,6 +7,8 @@ from datetime import datetime, timezone
 import traceback
 import os
 from pathlib import Path
+from functools import lru_cache
+from utils import rate_limit, check_session_expiry, is_chat_ready
 
 # --- CONFIG ---
 openai.api_key = st.secrets["OPENAI_API_KEY"]
@@ -79,6 +81,7 @@ CASES = {
 # Verify case files exist at startup
 ensure_case_files_exist()
 
+@lru_cache(maxsize=32)
 def get_case_content(condition_name: str) -> str:
     """Get the content of a case file."""
     try:
@@ -94,6 +97,7 @@ def get_case_content(condition_name: str) -> str:
         st.error(f"Error reading case file for {condition_name}: {str(e)}")
         return None
 
+@st.cache_data(ttl=3600)
 def get_ward_for_condition(condition_name: str) -> str:
     """Get the ward name for a given condition."""
     for ward, cases in CASES.items():
@@ -149,6 +153,9 @@ def login_user(email, password):
             # Store user info and current user ID
             st.session_state.user = res.user
             st.session_state.current_user_id = res.user.id
+            
+            # Initialize user-specific session state
+            init_user_session()
             
             return res
         return None
@@ -262,12 +269,13 @@ def get_next_case_variation(condition_name: str) -> int:
         return 1
 
 # --- CASE START FUNCTION ---
+@rate_limit(2)  # Prevent rapid case starts
 @handle_errors
 def start_case(condition_name: str):
     if not ensure_supabase_session():
         raise Exception("Authentication required. Please log in again.")
     
-    if st.session_state.case_started:
+    if get_user_state('case_started'):
         st.warning("A case is already in progress. Please complete it before starting a new one.")
         return
 
@@ -277,17 +285,22 @@ def start_case(condition_name: str):
         st.error(f"Could not load case content for {condition_name}")
         return
 
-    st.session_state.is_loading = True
+    set_user_state('is_loading', True)
     try:
         # Get next case variation
         case_variation = get_next_case_variation(condition_name)
-        st.session_state.case_variation = case_variation
+        set_user_state('case_variation', case_variation)
 
-        thread = client.beta.threads.create()
-        st.session_state.thread_id = thread.id
-        st.session_state.case_started = True
-        st.session_state.condition = condition_name
-        st.session_state.chat_history = []
+        thread = client.beta.threads.create(
+            metadata={
+                "user_id": st.session_state.current_user_id,
+                "session_id": get_user_session_id()
+            }
+        )
+        set_user_state('thread_id', thread.id)
+        set_user_state('case_started', True)
+        set_user_state('condition', condition_name)
+        set_user_state('chat_history', [])
 
         # initial prompt
         client.beta.threads.messages.create(
@@ -339,32 +352,33 @@ The [CASE COMPLETED] marker must be on its own line, followed by the JSON on new
         for msg in messages:
             if msg.role == "assistant":
                 reply = msg.content[0].text.value
-                st.session_state.chat_history.append(("assistant", reply))
+                chat_history = get_user_state('chat_history', [])
+                chat_history.append(("assistant", reply))
+                set_user_state('chat_history', chat_history)
                 break
 
     except Exception as e:
-        st.session_state.error_message = str(e)
-        st.session_state.case_started = False
-        st.session_state.thread_id = None
+        set_user_state('case_started', False)
+        set_user_state('thread_id', None)
         raise
     finally:
-        st.session_state.is_loading = False
+        set_user_state('is_loading', False)
 
 def reset_case_state():
     """Reset all case-related state variables"""
-    st.session_state.case_started = False
-    st.session_state.thread_id = None
-    st.session_state.chat_history = []
-    st.session_state.condition = None
-    st.session_state.case_completed = False
-    st.session_state.is_loading = False
-    st.session_state.show_goodbye = False
-    st.session_state.score = None
-    st.session_state.feedback = None
+    set_user_state('case_started', False)
+    set_user_state('thread_id', None)
+    set_user_state('chat_history', [])
+    set_user_state('condition', None)
+    set_user_state('case_completed', False)
+    set_user_state('is_loading', False)
+    set_user_state('show_goodbye', False)
+    set_user_state('score', None)
+    set_user_state('feedback', None)
 
 def reset_app_state():
     """Reset all app state variables"""
-    reset_case_state()
+    clear_user_session()
     st.session_state.user = None
     st.session_state.access_token = None
     st.session_state.refresh_token = None
@@ -415,10 +429,15 @@ if not ensure_supabase_session():
     reset_app_state()
     st.rerun()
 
+# Check session expiry before any action
+if not check_session_expiry():
+    reset_app_state()
+    st.rerun()
+
 st.title("🩺 UKMLA Case-Based Tutor")
 
 # --- CASE SELECTION ---
-if not st.session_state.case_started and not st.session_state.case_completed and not st.session_state.show_goodbye:
+if not get_user_state('case_started') and not get_user_state('case_completed') and not get_user_state('show_goodbye'):
     st.subheader("Choose a ward and case to begin:")
     
     # Create columns for each ward
@@ -434,53 +453,59 @@ if not st.session_state.case_started and not st.session_state.case_completed and
                     st.rerun()
 
 # --- CHAT DISPLAY ---
-if st.session_state.case_started:
-    for role, msg in st.session_state.chat_history:
+if get_user_state('case_started'):
+    for role, msg in get_user_state('chat_history', []):
         st.chat_message(role).markdown(msg)
 
 # --- CHAT INPUT ---
-if st.session_state.case_started:
-    user_input = st.chat_input("Your answer:")
+if get_user_state('case_started'):
+    if not is_chat_ready():
+        st.stop()
+    
+    user_input = st.chat_input("Your answer:", disabled=get_user_state('is_loading'))
     if user_input:
         try:
-            st.session_state.is_loading = True
+            set_user_state('is_loading', True)
             st.chat_message("user").markdown(user_input)
-            st.session_state.chat_history.append(("user", user_input))
+            chat_history = get_user_state('chat_history', [])
+            chat_history.append(("user", user_input))
+            set_user_state('chat_history', chat_history)
 
-            client.beta.threads.messages.create(
-                thread_id=st.session_state.thread_id,
-                role="user",
-                content=user_input
-            )
+            # Rate limit OpenAI calls
+            @rate_limit(1)
+            def send_to_assistant(input_text):
+                client.beta.threads.messages.create(
+                    thread_id=get_user_state('thread_id'),
+                    role="user",
+                    content=input_text
+                )
+                
+                run = client.beta.threads.runs.create(
+                    thread_id=get_user_state('thread_id'),
+                    assistant_id=ASSISTANT_ID
+                )
+                
+                return run.id
+            
+            run_id = send_to_assistant(user_input)
+            if not run_id:  # Rate limit hit
+                set_user_state('is_loading', False)
+                return
+                
+            # Wait for completion with timeout and exponential backoff
+            if not wait_for_run_completion(get_user_state('thread_id'), run_id):
+                st.error("Response timed out. Please try again.")
+                set_user_state('is_loading', False)
+                return
 
-            run = client.beta.threads.runs.create(
-                thread_id=st.session_state.thread_id,
-                assistant_id=ASSISTANT_ID
-            )
-
-            # Wait for completion with timeout
-            start_time = time.time()
-            while True:
-                if time.time() - start_time > 60:  # 60 second timeout
-                    raise TimeoutError("Response timed out")
-                    
-                status = client.beta.threads.runs.retrieve(
-                    thread_id=st.session_state.thread_id,
-                    run_id=run.id
-                ).status
-
-                if status == "completed":
-                    break
-                if status == "failed":
-                    raise Exception("Assistant run failed")
-                time.sleep(0.5)
-
-            messages = client.beta.threads.messages.list(thread_id=st.session_state.thread_id)
+            messages = client.beta.threads.messages.list(thread_id=get_user_state('thread_id'))
             for msg in messages:
                 if msg.role == "assistant":
                     reply = msg.content[0].text.value
                     st.chat_message("assistant").markdown(reply)
-                    st.session_state.chat_history.append(("assistant", reply))
+                    chat_history = get_user_state('chat_history', [])
+                    chat_history.append(("assistant", reply))
+                    set_user_state('chat_history', chat_history)
                     
                     # Check for case completion
                     if "[CASE COMPLETED]" in reply:
@@ -514,13 +539,13 @@ if st.session_state.case_started:
                                     
                                     # Store performance data
                                     performance_data = {
-                                        "user_id": st.session_state.current_user_id,
-                                        "condition": st.session_state.condition,
-                                        "case_variation": st.session_state.case_variation,
+                                        "user_id": get_user_state('current_user_id'),
+                                        "condition": get_user_state('condition'),
+                                        "case_variation": get_user_state('case_variation'),
                                         "score": score,
                                         "feedback": feedback,
                                         "created_at": datetime.now(timezone.utc).isoformat(),
-                                        "ward": get_ward_for_condition(st.session_state.condition)
+                                        "ward": get_ward_for_condition(get_user_state('condition'))
                                     }
                                     
                                     result = supabase.table("performance").insert(performance_data).execute()
@@ -529,13 +554,13 @@ if st.session_state.case_started:
                                         raise Exception("No data returned from insert")
                                         
                                     # Store score and feedback in session state
-                                    st.session_state.score = score
-                                    st.session_state.feedback = feedback
-                                    st.session_state.case_completed = True
+                                    set_user_state('score', score)
+                                    set_user_state('feedback', feedback)
+                                    set_user_state('case_completed', True)
                                     
                                     # Update total score in session state only
-                                    st.session_state.total_score += score
-                                    st.success(f"Case completed! Score: {score}/10. Total score: {st.session_state.total_score}")
+                                    set_user_state('total_score', get_user_state('total_score') + score)
+                                    st.success(f"Case completed! Score: {score}/10. Total score: {get_user_state('total_score')}")
                                     
                                     break
                                     
@@ -554,17 +579,19 @@ if st.session_state.case_started:
                     break
 
         except Exception as e:
+            set_user_state('case_started', False)
+            set_user_state('thread_id', None)
             st.session_state.error_message = str(e)
             st.error(f"An error occurred: {str(e)}")
         finally:
-            st.session_state.is_loading = False
+            set_user_state('is_loading', False)
 
 # Show loading indicator
-if st.session_state.is_loading:
+if get_user_state('is_loading'):
     st.spinner("Processing...")
 
 # Show goodbye message if user chose to exit
-if st.session_state.show_goodbye:
+if get_user_state('show_goodbye'):
     st.success("✅ Progress saved successfully!")
     st.markdown("""
     ### Thank you for using UKMLA Case-Based Tutor!
@@ -574,9 +601,9 @@ if st.session_state.show_goodbye:
     st.stop()
 
 # Show case completion UI if case is completed
-if st.session_state.case_completed:
-    st.success(f"🎯 Score: {st.session_state.score}/10")
-    st.info(f"💬 Feedback: {st.session_state.feedback}")
+if get_user_state('case_completed'):
+    st.success(f"🎯 Score: {get_user_state('score')}/10")
+    st.info(f"💬 Feedback: {get_user_state('feedback')}")
     
     st.markdown("### What would you like to do next?")
     col1, col2, col3 = st.columns(3)
@@ -584,27 +611,27 @@ if st.session_state.case_completed:
     with col1:
         if st.button("🔄 Try Another Case", key="try_another_case"):
             # Store the current condition
-            current_condition = st.session_state.condition
+            current_condition = get_user_state('condition')
             # Reset all state
-            reset_case_state()
+            clear_user_session()
+            init_user_session()
             # Start a fresh case
             start_case(current_condition)
             st.rerun()
     
     with col2:
         if st.button("📋 Choose Different Condition", key="choose_different"):
-            reset_case_state()
-            st.session_state.case_started = False
+            clear_user_session()
+            init_user_session()
             st.rerun()
     
     with col3:
         if st.button("💾 Save & Exit", key="save_exit"):
             reset_app_state()
-            st.session_state.case_started = False
             st.rerun()
 
 # Only show case selection if not in goodbye state
-if not st.session_state.case_started and not st.session_state.case_completed and not st.session_state.show_goodbye:
+if not get_user_state('case_started') and not get_user_state('case_completed') and not get_user_state('show_goodbye'):
     st.subheader("Choose a ward and case to begin:")
     # ... rest of the case selection UI code ...
 
@@ -616,9 +643,9 @@ def handle_case_completion(condition: str, feedback: str, score: int):
     try:
         # Store performance data
         performance_data = {
-            "user_id": st.session_state.current_user_id,
+            "user_id": get_user_state('current_user_id'),
             "condition": condition,
-            "case_variation": st.session_state.case_variation,
+            "case_variation": get_user_state('case_variation'),
             "score": score,
             "feedback": feedback,
             "created_at": datetime.now(timezone.utc).isoformat(),
@@ -629,8 +656,38 @@ def handle_case_completion(condition: str, feedback: str, score: int):
         supabase.table("performance").insert(performance_data).execute()
         
         # Update total score in session state only
-        st.session_state.total_score += score
-        st.success(f"Case completed! Score: {score}/10. Total score: {st.session_state.total_score}")
+        set_user_state('total_score', get_user_state('total_score') + score)
+        st.success(f"Case completed! Score: {score}/10. Total score: {get_user_state('total_score')}")
         
     except Exception as e:
         st.error(f"Error storing performance data: {str(e)}")
+
+def wait_for_run_completion(thread_id: str, run_id: str, timeout: int = 60):
+    """Wait for run completion with exponential backoff."""
+    start_time = time.time()
+    wait_time = 0.5
+    max_wait = 2.0  # Maximum wait between checks
+    
+    while True:
+        if time.time() - start_time > timeout:
+            raise TimeoutError("Response timed out")
+            
+        status = client.beta.threads.runs.retrieve(
+            thread_id=thread_id,
+            run_id=run_id
+        ).status
+
+        if status == "completed":
+            return True
+        if status == "failed":
+            raise Exception("Assistant run failed")
+        if status == "expired":
+            raise Exception("Assistant run expired")
+            
+        # Exponential backoff
+        time.sleep(min(wait_time, max_wait))
+        wait_time *= 1.5
+
+def log_performance_metric(operation: str, duration: float):
+    # Implementation of log_performance_metric function
+    pass
