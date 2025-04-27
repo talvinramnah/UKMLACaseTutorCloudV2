@@ -517,6 +517,40 @@ if get_user_state('case_started'):
         st.chat_message(role).markdown(msg)
 
 # --- CHAT INPUT ---
+def check_and_grant_badge(user_id, ward):
+    """Check if user is eligible for a badge in the given ward and grant it if so."""
+    try:
+        # 1. Count successful cases in this ward (score >= 7)
+        perf_result = supabase.table("performance") \
+            .select("score") \
+            .eq("user_id", user_id) \
+            .eq("ward", ward) \
+            .gte("score", 7) \
+            .execute()
+        success_count = len(perf_result.data) if perf_result.data else 0
+
+        # 2. Check if badge already exists
+        badge_result = supabase.table("badges") \
+            .select("id") \
+            .eq("user_id", user_id) \
+            .eq("ward", ward) \
+            .execute()
+        has_badge = bool(badge_result.data)
+
+        # 3. Grant badge if eligible and not already granted
+        if success_count >= 5 and not has_badge:
+            badge_name = f"{ward} Badge"
+            supabase.table("badges").insert({
+                "user_id": user_id,
+                "ward": ward,
+                "badge_name": badge_name
+            }).execute()
+            return badge_name
+        return None
+    except Exception as e:
+        st.error(f"Error checking/granting badge: {str(e)}")
+        return None
+
 def handle_chat_input():
     if not is_chat_ready():
         st.stop()
@@ -578,6 +612,8 @@ def handle_chat_input():
 
                             # Save performance with retry logic
                             max_retries = 3
+                            save_success = False
+                            last_error = None
                             for attempt in range(max_retries):
                                 try:
                                     # Ensure session is valid
@@ -607,18 +643,25 @@ def handle_chat_input():
                                     
                                     # Update total score in session state only
                                     set_user_state('total_score', get_user_state('total_score') + score)
-                                    st.success(f"Case completed! Score: {score}/10. Total score: {get_user_state('total_score')}")
-                                    
+                                    save_success = True
                                     break
                                     
                                 except Exception as e:
+                                    last_error = e
                                     if "42501" in str(e):  # RLS error
                                         if not refresh_supabase_session():
                                             raise Exception("Authentication failed. Please log in again.")
                                     elif attempt == max_retries - 1:
-                                        raise Exception(f"Failed to save performance after {max_retries} attempts: {str(e)}")
+                                        break
                                     time.sleep(1)  # Wait before retry
-                                    
+                            if save_success:
+                                st.success(f"Case completed! Score: {score}/10. Total score: {get_user_state('total_score')}")
+                                # Check and grant badge if eligible
+                                badge_name = check_and_grant_badge(st.session_state.current_user_id, get_ward_for_condition(get_user_state('condition')))
+                                if badge_name:
+                                    st.toast(f"🏅 Congratulations! You earned the {badge_name}!")
+                            else:
+                                raise Exception(f"Failed to save performance after {max_retries} attempts: {last_error}")
                         except json.JSONDecodeError:
                             st.warning("⚠️ Could not parse feedback JSON")
                         except Exception as e:
